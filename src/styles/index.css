@@ -42,11 +42,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* 轨道颜色 */
+  background: transparent; /* 轨道颜色 */
   border-radius: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #88888872; /* 滑块颜色 */
+  background: #88888826; /* 滑块颜色 */
   border-radius: 10px; /* 滑块圆角 */
+}
+
+.n-dropdown-menu .n-dropdown-option .n-dropdown-option-body {
+  font-size: 12px !important;
 }
