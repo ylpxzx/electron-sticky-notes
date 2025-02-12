@@ -2,8 +2,21 @@
   <div class="pt-2 flex flex-col" style="height: 100vh;">
     <div class="operation-area px-4 pb-2">
       <div class="flex justify-between pb-2 drag-area text-sm">
-        <div>electron sticky notes</div>
-        <div></div>
+        <div>stickyNotes</div>
+        <div class="absolute right-2">
+          <button @click="state.isOpenConfig = true" type="button"
+            class="inline-flex justify-center cursor-pointer text-gray-100 hover:text-gray-400">
+            <svg style="width: 14px; height: 14px;" t="1739324580903" viewBox="0 0 1024 1024" version="1.1"
+              xmlns="http://www.w3.org/2000/svg" p-id="2603" width="200" height="200">
+              <path
+                d="M509.387755 666.122449c-83.591837 0-151.510204-67.918367-151.510204-151.510204s67.918367-151.510204 151.510204-151.510204 151.510204 67.918367 151.510204 151.510204-67.918367 151.510204-151.510204 151.510204z m0-261.22449c-60.604082 0-109.714286 49.110204-109.714286 109.714286s49.110204 109.714286 109.714286 109.714286 109.714286-49.110204 109.714286-109.714286-49.110204-109.714286-109.714286-109.714286z"
+                fill="currentColor" p-id="2604"></path>
+              <path
+                d="M556.408163 929.959184h-83.591836c-47.542857 0-86.204082-38.661224-86.204082-86.204082v-22.987755c0-1.044898-0.522449-2.089796-1.567347-2.612245h-0.522449c-1.044898-0.522449-2.089796 0-3.134694 0.522449l-14.628571 15.15102c-16.195918 16.195918-37.093878 25.077551-59.559184 25.077551-22.465306 0-43.363265-8.881633-59.036735-24.555102l-59.036734-59.036734c-32.391837-32.391837-32.391837-85.159184 0-118.07347l15.673469-15.15102c1.044898-1.044898 1.044898-2.089796 0.522449-3.134694v-0.522449c-0.522449-1.044898-1.567347-1.567347-2.612245-1.567347h-22.987755c-47.542857 0-86.204082-38.661224-86.204082-86.204082v-78.367346c0.522449-47.020408 39.183673-85.681633 86.726531-85.681633h21.420408c1.044898 0 2.089796-0.522449 2.612245-2.089796 0.522449-1.044898 1.044898-2.612245 1.567347-3.657143 0.522449-1.044898 0-2.089796-0.522449-3.134694l-16.195918-16.718367C156.734694 329.142857 156.734694 275.853061 189.126531 243.461224l59.036734-59.036734c15.673469-15.673469 36.571429-24.555102 59.036735-24.555102 22.465306 0 43.363265 8.881633 59.036735 24.555102l15.15102 15.673469c0.522449 1.044898 2.089796 1.044898 3.134694 0.522449h0.522449c1.044898-0.522449 1.567347-1.567347 1.567347-2.612245v-17.763265C386.612245 132.702041 425.273469 94.040816 472.816327 94.040816h83.591836c44.408163 0 80.979592 36.571429 80.979592 80.979592v21.420408c0 1.044898 0.522449 2.089796 2.089796 2.612245 1.567347 0.522449 2.612245 1.044898 3.657143 1.567347 1.044898 0.522449 2.089796 0 3.134694-0.522449l16.718367-16.195918c32.391837-32.391837 85.159184-32.391837 118.073469 0.522449l59.036735 59.036734c15.673469 15.673469 24.555102 36.571429 24.555102 59.036735 0 22.465306-8.881633 43.363265-24.555102 59.036735l-15.673469 16.195918c-0.522449 0.522449-1.044898 2.089796-0.522449 2.612245 0.522449 1.044898 1.044898 2.612245 1.567347 3.657143 0.522449 1.044898 1.567347 2.089796 2.612245 2.089796h21.420408c44.408163 0 80.979592 36.571429 80.979592 80.979592v88.816326c0 44.408163-36.571429 80.979592-80.979592 80.979592h-22.987755c-1.044898 0-2.089796 0.522449-2.612245 1.567347-0.522449 1.567347-0.522449 2.612245 0.522449 3.657143l15.15102 14.628571c16.195918 16.195918 25.077551 37.093878 24.555102 59.559184 0 22.465306-8.881633 43.363265-24.555102 59.036735l-59.036734 59.036734c-15.673469 15.673469-36.571429 24.555102-59.036735 24.555102s-43.363265-8.881633-59.036735-24.555102l-16.195918-15.673469c-0.522449-0.522449-2.089796-1.044898-2.612245-0.522449-1.044898 0.522449-2.612245 1.044898-3.657143 1.567347-1.044898 0.522449-2.089796 1.567347-2.089796 2.612245v26.644898C637.387755 893.387755 600.816327 929.959184 556.408163 929.959184zM402.285714 780.538776c16.195918 7.314286 26.122449 22.987755 26.122449 40.75102v22.987755c0 24.555102 19.853061 44.408163 44.408164 44.408163h83.591836c21.420408 0 39.183673-17.763265 39.183674-39.183673v-26.644898c0-18.285714 10.971429-34.481633 28.212245-41.27347 1.044898-0.522449 1.567347-0.522449 2.612245-1.044897 16.718367-7.314286 35.526531-3.657143 48.587755 8.881632l16.195918 15.67347c16.718367 16.718367 43.363265 16.718367 59.559184 0l59.036734-59.036735c7.836735-7.836735 12.016327-18.285714 12.016327-29.779592 0-10.971429-4.179592-21.420408-12.016327-29.779592l-14.628571-14.106122c-13.583673-13.061224-17.763265-32.914286-9.926531-50.155102v-0.522449c6.791837-15.673469 22.987755-26.122449 40.751021-26.122449h22.987755c21.420408 0 39.183673-17.763265 39.183673-39.183674v-88.816326c0-21.420408-17.763265-39.183673-39.183673-39.183674h-21.420408c-18.285714 0-34.481633-10.971429-41.27347-28.212245-0.522449-1.044898-0.522449-1.567347-1.044898-2.612245-7.314286-16.718367-3.657143-35.526531 8.881633-48.587755l15.673469-16.195918c7.836735-7.836735 12.538776-18.808163 12.538776-29.779592 0-11.493878-4.179592-21.942857-12.016327-29.779592L751.281633 214.204082c-16.195918-16.195918-42.840816-16.195918-59.036735 0l-17.240816 16.195918c-13.061224 12.538776-32.391837 15.673469-48.587755 8.881633-0.522449-0.522449-1.567347-0.522449-2.612245-1.044898-17.240816-6.791837-28.212245-22.987755-28.212245-41.27347v-21.420408c0-21.420408-17.763265-39.183673-39.183674-39.183673h-83.591836c-24.555102 0-44.408163 19.853061-44.408164 44.408163V198.530612c0 17.763265-10.44898 33.436735-26.644898 40.751021-17.240816 7.836735-37.093878 3.657143-50.155102-9.404082l-15.15102-15.673469c-7.836735-7.836735-18.285714-12.016327-29.257143-12.016327-10.971429 0-21.420408 4.179592-29.257143 12.016327L218.906122 272.718367c-16.195918 16.195918-16.195918 42.840816 0 59.036735l16.195919 17.240816c12.538776 13.061224 16.195918 32.391837 8.881632 48.587755-0.522449 0.522449-0.522449 1.567347-1.044897 2.612245-6.791837 17.240816-22.987755 28.212245-41.27347 28.212245h-21.420408c-24.555102 0-44.408163 19.853061-44.408163 44.408164v78.367346c0 24.555102 19.853061 44.408163 44.408163 44.408164h22.987755c17.763265 0 33.436735 10.44898 40.75102 26.644898v0.522449c7.314286 16.718367 3.657143 37.093878-9.404081 49.632653l-15.67347 15.15102c-16.195918 16.195918-16.195918 42.318367 0 58.514286l59.036735 59.036735c7.836735 7.836735 18.285714 12.016327 29.257143 12.016326 10.971429 0 21.420408-4.179592 29.779592-12.538775l14.106122-14.628572c13.061224-13.583673 32.914286-17.763265 50.155102-9.92653l1.044898 0.522449z"
+                fill="currentColor" p-id="2605"></path>
+            </svg>
+          </button>
+        </div>
       </div>
       <div>
         <div class="py-6">
@@ -37,22 +50,22 @@
       </div>
     </div>
     <div class="flex justify-around gap-4 px-2 pt-2">
-      <div class="cursor-pointer flex gap-1" :class="[state.tabSign === 'incomplete' ? 'underline' : '']"
-        @click="onChangeTab('incomplete')">
+      <div v-if="incompleteCount" class="cursor-pointer flex gap-1"
+        :class="[state.tabSign === 'incomplete' ? 'underline' : '']" @click="onChangeTab('incomplete')">
         <div>Incomplete</div>
-        <div v-if="incompleteCount" class="text-white text-xs flex justify-center items-center"
+        <div class="text-white text-xs flex justify-center items-center"
           style="border-radius: 50%; width: 8px; height: 8px;">{{ incompleteCount }}</div>
       </div>
-      <div class="cursor-pointer flex gap-1" :class="[state.tabSign === 'completed' ? 'underline' : '']"
-        @click="onChangeTab('completed')">
+      <div v-if="completedCount" class="cursor-pointer flex gap-1"
+        :class="[state.tabSign === 'completed' ? 'underline' : '']" @click="onChangeTab('completed')">
         <div>Completed</div>
-        <div v-if="completedCount" class="text-white text-xs flex justify-center items-center"
+        <div class="text-white text-xs flex justify-center items-center"
           style="border-radius: 50%; width: 8px; height: 8px;">{{ completedCount }}</div>
       </div>
-      <div class="cursor-pointer flex gap-1" :class="[state.tabSign === 'deleted' ? 'underline' : '']"
-        @click="onChangeTab('deleted')">
+      <div v-if="deletedCount" class="cursor-pointer flex gap-1"
+        :class="[state.tabSign === 'deleted' ? 'underline' : '']" @click="onChangeTab('deleted')">
         <div>Deleted</div>
-        <div v-if="deletedCount" class="text-white text-xs flex justify-center items-center"
+        <div class="text-white text-xs flex justify-center items-center"
           style="border-radius: 50%; width: 8px; height: 8px;">{{ deletedCount }}</div>
       </div>
     </div>
@@ -60,7 +73,7 @@
       <div class="p-2 mb-2 cursor-pointer rounded-xl custom-border" v-for="item in state.showData" :key="item.id"
         draggable="true" @dragstart="dragStart($event, item)" @dragover.prevent @drop="drop($event, item)">
         <div class="flex justify-between" style="padding-bottom: 2px;">
-          <div class="text-gray-300 text-xs">
+          <div class="text-gray-100 text-xs">
             {{ item.time }}
           </div>
           <div class="flex gap-2">
@@ -102,6 +115,8 @@
         </div>
       </div>
     </div>
+    <ConfigComp v-if="state.isOpenConfig" v-model:is-show="state.isOpenConfig" v-model:bg-color="state.bgColor"
+      v-model:transparency="state.transparency" @close="onCloseEvent" @color="onUpdateColor"></ConfigComp>
   </div>
 </template>
 
@@ -109,6 +124,7 @@
 import { reactive, computed, onMounted } from "vue";
 import dayjs from 'dayjs';
 import DropdownMenu from './components/DropdownMenu/index.vue';
+import ConfigComp from './components/ConfigComp/index.vue';
 
 const state = reactive({
   currentDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
@@ -154,8 +170,20 @@ const state = reactive({
       isDeleted: false,
     }
   ],
-  showData: []
+  showData: [],
+  isOpenConfig: false,
+  bgColor: '#000000',
+  transparency: 0,
 })
+
+const onCloseEvent = () => {
+  state.isOpenConfig = false
+}
+
+const onUpdateColor = (item) => {
+  state.bgColor = item.color
+  state.transparency = item.transparency
+}
 
 const dragStart = (event, item) => {
   event.dataTransfer.setData('text/plain', JSON.stringify(item));
@@ -257,7 +285,13 @@ const onCancelComplete = (item) => {
 const onRestore = (item) => {
   const index = state.listData.findIndex(i => i.id === item.id);
   state.listData[index].isDeleted = false;
-  state.showData = state.listData.filter(i => i.isDeleted);
+  if (state.listData[index].isCompleted) {
+    state.tabSign = 'completed';
+    state.showData = state.listData.filter(i => i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+  } else {
+    state.tabSign = 'incomplete';
+    state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+  }
 };
 
 onMounted(() => {
