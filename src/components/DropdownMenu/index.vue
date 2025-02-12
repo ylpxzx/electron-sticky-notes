@@ -1,7 +1,7 @@
 <template>
   <div class="relative" :id="`id-${data.id}`">
     <button @click="onDropdownEvent(item)" type="button"
-      class="inline-flex justify-center cursor-pointer text-gray-300 hover:text-gray-400">
+      class="inline-flex justify-center cursor-pointer text-gray-100 hover:text-gray-400">
       <svg t="1738986183731" style="width: 14px; height: 14px;" viewBox="0 0 1024 1024" version="1.1"
         xmlns="http://www.w3.org/2000/svg" p-id="21927" width="200" height="200">
         <path
