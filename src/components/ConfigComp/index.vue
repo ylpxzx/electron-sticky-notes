@@ -69,7 +69,6 @@ const state = reactive({
 
 watch(() => props.isShow, (newVal) => {
   state.isVisible = newVal;
-  console.log('newVal', newVal, state.isVisible);
 });
 
 watch([() => state.transparency, () => state.colorValue], ([newTransparency, newColor]) => {
