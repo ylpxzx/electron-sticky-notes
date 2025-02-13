@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { config } from './config/default';
@@ -17,13 +17,18 @@ const createWindow = () => {
     minHeight: config.mainWindow.minHeight,
     minWidth: config.mainWindow.minWidth,
     frame: false,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     transparent: true,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+
+  ipcMain.on('set-is-top', (event, isTop) => {
+    mainWindow.setAlwaysOnTop(isTop);
+  })
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
