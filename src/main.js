@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { config } from './config/default';
@@ -35,6 +35,22 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
+
+  // 监听窗口移动事件, 实现左右侧贴边吸附功能
+  mainWindow.on('move', () => {
+    const bounds = mainWindow.getBounds(); // 获取当前窗口的边界
+    const screenBounds = screen.getPrimaryDisplay().bounds;  // 获取主显示器
+
+    mainWindow.setPosition(bounds.x, bounds.y);
+
+    if (screenBounds.width - (bounds.x + bounds.width) < 20) { // 右侧吸附
+      mainWindow.setPosition(screenBounds.width - bounds.width, bounds.y);
+    }
+
+    if (bounds.x < 20) { // 左侧吸附
+      mainWindow.setPosition(screenBounds.x, bounds.y);
+    }
+});
 
   mainWindow.webContents.openDevTools();
 };
