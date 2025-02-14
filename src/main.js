@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { config } from './config/default';
+import Store from 'electron-store';
 
 // Avoid Warning：Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
@@ -9,6 +10,8 @@ process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 if (started) {
   app.quit();
 }
+
+Store.initRenderer();
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -52,7 +55,7 @@ const createWindow = () => {
     }
 });
 
-  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools({ mode: "detach" });
 };
 
 app.whenReady().then(() => {
