@@ -150,17 +150,7 @@ const state = reactive({
   editId: '',
   tabSign: 'incomplete',
   editData: {},
-  listData: [
-    {
-      id: 1,
-      sort: 0,
-      task: '便签待完成任务1：这是一个待完成的任务,等你来完成',
-      time: '2021-10-10 10:10:10',
-      isCompleted: false,
-      isTip: true,
-      isDeleted: false,
-    }
-  ],
+  listData: [],
   showData: [],
   isOpenConfig: false,
   isTop: false,
@@ -170,6 +160,13 @@ const state = reactive({
 
 const onIsTop = () => {
   state.isTop = !state.isTop
+}
+
+const onGetAllTodo = async () => {
+  await electronAPI.getAllTodo().then((item) => {
+    state.listData = Object.values(item);
+    console.log('state.listData', state.listData);
+  })
 }
 
 watch(() => state.isTop, (newVal) => {
@@ -294,7 +291,8 @@ const onRestore = (item) => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await onGetAllTodo();
   state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted);
 })
 </script>
