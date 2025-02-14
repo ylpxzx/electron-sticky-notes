@@ -1,4 +1,4 @@
-import { getDB } from './db';
+import { getDB } from '.';
 import dayjs from 'dayjs';
 
 export default class Todo {

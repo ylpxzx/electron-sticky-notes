@@ -165,7 +165,6 @@ const onIsTop = () => {
 const onGetAllTodo = async () => {
   await electronAPI.getAllTodo().then((item) => {
     state.listData = Object.values(item);
-    console.log('state.listData', state.listData);
   })
 }
 

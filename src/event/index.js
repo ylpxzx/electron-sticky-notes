@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron';
-import Todo from '../plugins/todo';
+import Todo from '../plugins/db/todo';
 
 const todo = new Todo();
 
