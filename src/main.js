@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { config } from './config/default';
+import { initEvent } from './event/index';
 import Store from 'electron-store';
 
 // Avoid Warning：Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
@@ -60,7 +61,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow();
-
+  initEvent();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
