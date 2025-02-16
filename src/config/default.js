@@ -5,5 +5,7 @@ export const config = {
     minWidth: 300,
     minHeight: 400,
     isAlwaysOnTop: false,
+    bgColor: '#000000',
+    transparency: 0,
   }
 }

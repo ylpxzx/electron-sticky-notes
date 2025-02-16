@@ -171,11 +171,17 @@ const onGetAllTodo = async () => {
 const onGetConfig = async () => {
   await electronAPI.getAppConfig().then((item) => {
     state.isTop = item.isAlwaysOnTop
+    state.bgColor = item.bgColor
+    state.transparency = item.transparency
   })
 }
 
 watch(() => state.isTop, (newVal) => {
   electronAPI.setIsTop(state.isTop)
+});
+
+watch(() => state.bgColor, (newVal) => {
+  console.log('颜色变化：', newVal);
 });
 
 const onCloseEvent = () => {
@@ -185,6 +191,14 @@ const onCloseEvent = () => {
 const onUpdateColor = (item) => {
   state.bgColor = item.color
   state.transparency = item.transparency
+  electronAPI.setAppConfig({
+    key: 'mainWindow.bgColor',
+    value: state.bgColor
+  })
+  electronAPI.setAppConfig({
+    key: 'mainWindow.transparency',
+    value: state.transparency
+  })
 }
 
 const dragStart = (event, item) => {

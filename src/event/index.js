@@ -8,4 +8,9 @@ const config = new Config();
 export const initEvent = () => {
   ipcMain.handle('getTodo', () => todo.getAllTodo());
   ipcMain.handle('getConfig', () => config.get());
+  ipcMain.on('set-app-config', (event, content) => {
+    console.log('setting: ', content);
+    
+    config.set(content.key, content.value);
+  })
 };
