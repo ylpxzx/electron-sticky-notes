@@ -1,24 +1,25 @@
 import { getDB } from '.';
+import { config } from '../../config/default'
 
 export default class AppConfig {
   constructor() {
     this.store = getDB('config');
-    this.data = [];
+    this.config = config.mainWindow;
+    const isHasConfig = this.store.has('mainWindow');
+    if (isHasConfig) {
+      this.config = this.store.get('mainWindow')
+    } else {
+      this.store.set(config)
+    }
   }
 
-  getAllConfig() {
-    return this.store.getAll();
+  get() {
+    return this.config
   }
 
-  add(data) {
-    this.store.set(data);
-  }
-
-  delete(key) {
-    this.store.delete(key);
-  }
-
-  update(data) {
-    this.store.set(data);
+  set(key, value) {
+    this.store.set({
+      [key]: value
+    })
   }
 }

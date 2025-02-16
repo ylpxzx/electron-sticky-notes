@@ -168,6 +168,12 @@ const onGetAllTodo = async () => {
   })
 }
 
+const onGetConfig = async () => {
+  await electronAPI.getAppConfig().then((item) => {
+    state.isTop = item.isAlwaysOnTop
+  })
+}
+
 watch(() => state.isTop, (newVal) => {
   electronAPI.setIsTop(state.isTop)
 });
@@ -292,6 +298,7 @@ const onRestore = (item) => {
 
 onMounted(async () => {
   await onGetAllTodo();
+  await onGetConfig();
   state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted);
 })
 </script>

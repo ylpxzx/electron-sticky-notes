@@ -1,9 +1,11 @@
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
-import { config } from './config/default';
 import { initEvent } from './event/index';
 import Store from 'electron-store';
+import Config from './plugins/db/config';
+
+const windowConfig = new Config();
 
 // Avoid Warning：Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
@@ -16,12 +18,12 @@ Store.initRenderer();
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    height: config.mainWindow.height,
-    width: config.mainWindow.width,
-    minHeight: config.mainWindow.minHeight,
-    minWidth: config.mainWindow.minWidth,
+    height: windowConfig.config.height,
+    width: windowConfig.config.width,
+    minHeight: windowConfig.config.minHeight,
+    minWidth: windowConfig.config.minWidth,
     frame: false,
-    alwaysOnTop: false,
+    alwaysOnTop: windowConfig.config.isAlwaysOnTop,
     transparent: true,
     webPreferences: {
       nodeIntegration: true,
@@ -32,6 +34,7 @@ const createWindow = () => {
 
   ipcMain.on('set-is-top', (event, isTop) => {
     mainWindow.setAlwaysOnTop(isTop);
+    windowConfig.set('mainWindow.isAlwaysOnTop', isTop);
   })
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {

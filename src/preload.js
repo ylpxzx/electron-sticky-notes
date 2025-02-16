@@ -5,4 +5,5 @@ const { contextBridge, ipcRenderer } = require('electron/renderer')
 contextBridge.exposeInMainWorld('electronAPI', {
   setIsTop: (isTop) => ipcRenderer.send('set-is-top', isTop),
   getAllTodo: () => ipcRenderer.invoke('getTodo'),
+  getAppConfig: () => ipcRenderer.invoke('getConfig'),
 })
