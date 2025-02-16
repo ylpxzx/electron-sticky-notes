@@ -77,8 +77,6 @@ watch([() => state.transparency, () => state.colorValue], ([newTransparency, new
   const g = parseInt(rgba.substring(2, 4), 16);
   const b = parseInt(rgba.substring(4, 6), 16);
   const a = 1 - (newTransparency / 100);
-  console.log(`rgba(${r}, ${g}, ${b}, ${a})`);
-
   document.documentElement.style.setProperty('--bg-color', `rgba(${r}, ${g}, ${b}, ${a})`);
   emit('color', { color: newColor, transparency: newTransparency });
 });

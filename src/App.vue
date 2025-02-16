@@ -173,15 +173,17 @@ const onGetConfig = async () => {
     state.isTop = item.isAlwaysOnTop
     state.bgColor = item.bgColor
     state.transparency = item.transparency
-  })
+    const rgba = state.bgColor.replace('#', '');
+    const r = parseInt(rgba.substring(0, 2), 16);
+    const g = parseInt(rgba.substring(2, 4), 16);
+    const b = parseInt(rgba.substring(4, 6), 16);
+    const a = 1 - (state.transparency / 100);
+    document.documentElement.style.setProperty('--bg-color', `rgba(${r}, ${g}, ${b}, ${a})`);
+    })
 }
 
 watch(() => state.isTop, (newVal) => {
   electronAPI.setIsTop(state.isTop)
-});
-
-watch(() => state.bgColor, (newVal) => {
-  console.log('颜色变化：', newVal);
 });
 
 const onCloseEvent = () => {
