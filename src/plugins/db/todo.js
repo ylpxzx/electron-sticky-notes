@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 export default class Todo {
   constructor() {
-    this.store = getDB('todo');
+    this.store = getDB('todo').instance();
     this.data = [
       {
         id: '123',
@@ -42,24 +42,28 @@ export default class Todo {
         isDeleted: true,
       }
     ];
-    const todoaCount = this.store.size;
-    if (!todoaCount) {
-      this.store.set(this.data);
-    } else {
+    const dataCount = this.store.size;
+    if (dataCount) {
       this.data = this.getAllTodo();
+    } else {
+      this.store.set(this.data);
     }
   }
 
   getAllTodo() {
-    return this.store.getAll();
+    return this.store.store;
   }
 
-  add(data) {
-    this.store.set(data);
+  set(key, value) {
+    this.store.set({
+      [key]: value
+    });
   }
 
   delete(key) {
-    this.store.delete(key);
+    if (this.store.has(key)) {
+      this.store.delete(key);
+    }
   }
 
   update(data) {

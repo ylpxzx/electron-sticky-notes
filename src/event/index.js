@@ -11,4 +11,13 @@ export const initEvent = () => {
   ipcMain.on('set-app-config', (event, content) => {
     config.set(content.key, content.value);
   })
+  ipcMain.on('updateTodo', (event, data) => {
+    todo.update(data);
+  })
+  ipcMain.on('setTodo', (event, item) => {
+    todo.set(item.key, item.value);
+  })
+  ipcMain.on('deleteTodo', (event, key) => {
+    todo.delete(key);
+  })
 };

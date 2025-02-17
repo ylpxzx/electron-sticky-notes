@@ -72,7 +72,7 @@ const createWindow = () => {
     windowConfig.set('mainWindow.height', bounds.height);
   });
 
-  // mainWindow.webContents.openDevTools({ mode: "detach" });
+  mainWindow.webContents.openDevTools({ mode: "detach" });
 };
 
 app.whenReady().then(() => {

@@ -99,7 +99,7 @@
               p-id="41196" fill="currentColor"></path>
           </svg>restore
         </a>
-        <a @click="onDeleteEvent"
+        <a @click="onDeleteEvent" v-if="!data.isDeleted"
           class="flex items-center w-full p-2 rounded-md text-xs text-red-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer">
           <svg t="1738987383556" style="width: 14px; height: 14px;" class="mr-2" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="34031" width="200" height="200">
@@ -110,6 +110,18 @@
               d="M416 432c-17.6 0-32 14.4-32 32v256c0 17.6 14.4 32 32 32s32-14.4 32-32V464c0-17.6-14.4-32-32-32zM608 432c-17.6 0-32 14.4-32 32v256c0 17.6 14.4 32 32 32s32-14.4 32-32V464c0-17.6-14.4-32-32-32z"
               fill="currentColor" p-id="34033"></path>
           </svg>Delete
+        </a>
+        <a @click="onCompletelyDeleteEvent" v-else
+          class="flex items-center w-full p-2 rounded-md text-xs text-red-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer">
+          <svg t="1738987383556" style="width: 14px; height: 14px;" class="mr-2" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="34031" width="200" height="200">
+            <path
+              d="M880 240H704v-64c0-52.8-43.2-96-96-96H416c-52.8 0-96 43.2-96 96v64H144c-17.6 0-32 14.4-32 32s14.4 32 32 32h48v512c0 70.4 57.6 128 128 128h384c70.4 0 128-57.6 128-128V304h48c17.6 0 32-14.4 32-32s-14.4-32-32-32z m-496-64c0-17.6 14.4-32 32-32h192c17.6 0 32 14.4 32 32v64H384v-64z m384 640c0 35.2-28.8 64-64 64H320c-35.2 0-64-28.8-64-64V304h512v512z"
+              fill="currentColor" p-id="34032"></path>
+            <path
+              d="M416 432c-17.6 0-32 14.4-32 32v256c0 17.6 14.4 32 32 32s32-14.4 32-32V464c0-17.6-14.4-32-32-32zM608 432c-17.6 0-32 14.4-32 32v256c0 17.6 14.4 32 32 32s32-14.4 32-32V464c0-17.6-14.4-32-32-32z"
+              fill="currentColor" p-id="34033"></path>
+          </svg>Completely Delete
         </a>
       </div>
     </div>
@@ -125,7 +137,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['edit', 'delete', 'restore', 'markComplete', 'cancelComplete']);
+const emit = defineEmits(['edit', 'delete', 'restore', 'markComplete', 'cancelComplete', 'completelyDelete']);
 
 const state = reactive({
   isDropdownVisible: false,
@@ -147,6 +159,12 @@ const onEditEvent = () => {
 const onDeleteEvent = () => {
   const dataBack = JSON.parse(JSON.stringify(props.data));
   emit('delete', dataBack);
+  closeDropdown();
+}
+
+const onCompletelyDeleteEvent = () => {
+  const dataBack = JSON.parse(JSON.stringify(props.data));
+  emit('completelyDelete', dataBack);
   closeDropdown();
 }
 

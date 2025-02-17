@@ -105,7 +105,8 @@
               </svg>
             </button> -->
             <dropdown-menu :data="item" @edit="onEdit" @delete="onDelete" @markComplete="onMarkComplete"
-              @cancelComplete="onCancelComplete" @restore="onRestore"></dropdown-menu>
+              @cancelComplete="onCancelComplete" @restore="onRestore"
+              @completelyDelete="onCompletelyDelete"></dropdown-menu>
           </div>
         </div>
         <div class="overflow-hidden">
@@ -128,7 +129,7 @@
               </div>
             </div>
             <span v-else :class="[item.isCompleted ? 'line-through text-blue-100' : 'text-white']">{{ item.task
-              }}</span>
+            }}</span>
           </div>
         </div>
       </div>
@@ -219,13 +220,33 @@ const drop = (event, item) => {
       const sortIndex = state.listData.findIndex(j => j.id === i.id);
       state.listData[sortIndex].sort = index + Math.min(draggedIndex, targetIndex);
     });
+    electronAPI.updateTodo(JSON.parse(JSON.stringify(state.listData)));
   }
 };
+
+const filterIncompleteData = () => {
+  state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+};
+
+const filterCompleteData = () => {
+  state.showData = state.listData.filter(i => i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+};
+
+const filterDeletedData = () => {
+  state.showData = state.listData.filter(i => i.isDeleted).sort((a, b) => a.sort - b.sort);
+};
+
+const updateTodoData = (index, item) => {
+  electronAPI.setTodo({
+    key: index,
+    value: JSON.parse(JSON.stringify(item))
+  })
+}
 
 const onSubmit = () => {
   if (!state.taskValue) return;
   state.listData.push({
-    id: state.listData.length + 1,
+    id: `${state.listData.length + 1}`,
     sort: state.listData.length + 1,
     task: state.taskValue,
     time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
@@ -233,22 +254,23 @@ const onSubmit = () => {
     isTip: true,
     isDeleted: false,
   });
+  updateTodoData(state.listData.length - 1, state.listData[state.listData.length - 1])
   state.taskValue = '';
   state.tabSign = 'incomplete';
-  state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+  filterIncompleteData()
 };
 
 const onChangeTab = (sign) => {
   state.tabSign = sign;
   switch (sign) {
     case 'incomplete':
-      state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+      filterIncompleteData();
       break;
     case 'completed':
-      state.showData = state.listData.filter(i => i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+      filterCompleteData()
       break;
     case 'deleted':
-      state.showData = state.listData.filter(i => i.isDeleted).sort((a, b) => a.sort - b.sort);
+      filterDeletedData()
       break;
     default:
       state.showData = state.listData.sort((a, b) => a.sort - b.sort);
@@ -274,43 +296,84 @@ const onCancelEdit = () => {
 const onCompleteEdit = () => {
   const index = state.listData.findIndex(i => i.id === state.editId);
   state.listData[index].task = state.editData.task;
+  updateTodoData(index, state.listData[index])
   state.editId = ''
 }
 
 const onDelete = (item) => {
   const index = state.listData.findIndex(i => i.id === item.id);
   state.listData[index].isDeleted = true;
+  updateTodoData(index, state.listData[index])
   state.tabSign = 'deleted';
-  state.showData = state.listData.filter(i => i.isDeleted);
+  filterDeletedData();
 };
 
 const onMarkComplete = (item) => {
   const index = state.listData.findIndex(i => i.id === item.id);
   state.listData[index].isCompleted = true;
-  state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted);
+  updateTodoData(index, state.listData[index])
+  if (incompleteCount.value === 0) {
+    state.tabSign = 'completed';
+    filterCompleteData();
+  } else {
+    state.tabSign = 'incomplete';
+    filterIncompleteData();
+  }
 };
 
 const onCancelComplete = (item) => {
   const index = state.listData.findIndex(i => i.id === item.id);
   state.listData[index].isCompleted = false;
-  state.showData = state.listData.filter(i => i.isCompleted && !i.isDeleted);
+  updateTodoData(index, state.listData[index])
+  if (completedCount.value === 0) {
+    state.tabSign = 'incomplete';
+    filterIncompleteData();
+  } else {
+    state.tabSign = 'completed';
+    filterCompleteData();
+  }
+};
+
+const onCompletelyDelete = (item) => {
+  const index = state.listData.findIndex(i => i.id === item.id);
+  state.listData.splice(index, 1);
+  electronAPI.deleteTodo(`${index}`);
+  if (deletedCount.value === 0) {
+    state.tabSign = 'incomplete';
+    filterIncompleteData();
+  } else {
+    state.tabSign = 'deleted';
+    filterDeletedData();
+  }
 };
 
 const onRestore = (item) => {
   const index = state.listData.findIndex(i => i.id === item.id);
   state.listData[index].isDeleted = false;
+  updateTodoData(index, state.listData[index])
   if (state.listData[index].isCompleted) {
     state.tabSign = 'completed';
-    state.showData = state.listData.filter(i => i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+    filterCompleteData();
   } else {
     state.tabSign = 'incomplete';
-    state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted).sort((a, b) => a.sort - b.sort);
+    filterIncompleteData();
   }
 };
 
 onMounted(async () => {
   await onGetAllTodo();
   await onGetConfig();
-  state.showData = state.listData.filter(i => !i.isCompleted && !i.isDeleted);
+  if (completedCount.value !== 0) {
+    state.tabSign = 'incomplete';
+    filterIncompleteData();
+  }
+  if (incompleteCount.value === 0) {
+    state.tabSign = 'completed';
+    filterCompleteData();
+  }
+  if (deletedCount.value !== 0) {
+    state.tabSign = 'deleted';
+    filterDeletedData();
+  }
 })
 </script>

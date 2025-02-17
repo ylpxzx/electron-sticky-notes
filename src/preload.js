@@ -7,4 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   setAppConfig: (content) => ipcRenderer.send('set-app-config', content),
   getAllTodo: () => ipcRenderer.invoke('getTodo'),
   getAppConfig: () => ipcRenderer.invoke('getConfig'),
+  updateTodo: (data) => ipcRenderer.send('updateTodo', data),
+  setTodo: (item) => ipcRenderer.send('setTodo', item),
+  deleteTodo: (key) => ipcRenderer.send('deleteTodo', key)
 })
