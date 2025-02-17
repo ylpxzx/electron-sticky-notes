@@ -46,7 +46,7 @@ const createWindow = () => {
   }
 
   // 监听窗口移动事件, 实现左右侧贴边吸附功能
-  mainWindow.on('move', () => {
+  mainWindow.on('moved', () => {
     const bounds = mainWindow.getBounds(); // 获取当前窗口的边界
     // 保存当前窗口的位置
     windowConfig.set('mainWindow.x', bounds.x);
