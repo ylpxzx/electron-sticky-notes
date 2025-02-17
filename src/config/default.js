@@ -1,5 +1,7 @@
 export const config = {
   mainWindow: {
+    x: 0,
+    y: 0,
     width: 600,
     height: 500,
     minWidth: 300,

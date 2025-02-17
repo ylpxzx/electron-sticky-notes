@@ -18,6 +18,8 @@ Store.initRenderer();
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
+    x: windowConfig.config.x,
+    y: windowConfig.config.y,
     height: windowConfig.config.height,
     width: windowConfig.config.width,
     minHeight: windowConfig.config.minHeight,
@@ -46,6 +48,10 @@ const createWindow = () => {
   // 监听窗口移动事件, 实现左右侧贴边吸附功能
   mainWindow.on('move', () => {
     const bounds = mainWindow.getBounds(); // 获取当前窗口的边界
+    // 保存当前窗口的位置
+    windowConfig.set('mainWindow.x', bounds.x);
+    windowConfig.set('mainWindow.y', bounds.y);
+
     const screenBounds = screen.getPrimaryDisplay().bounds;  // 获取主显示器
 
     mainWindow.setPosition(bounds.x, bounds.y);
@@ -57,9 +63,16 @@ const createWindow = () => {
     if (bounds.x < 20) { // 左侧吸附
       mainWindow.setPosition(screenBounds.x, bounds.y);
     }
-});
+  });
 
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  mainWindow.on('resize', () => {
+    const bounds = mainWindow.getBounds();
+    // 保存当前窗口的大小
+    windowConfig.set('mainWindow.width', bounds.width);
+    windowConfig.set('mainWindow.height', bounds.height);
+  });
+
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
 };
 
 app.whenReady().then(() => {

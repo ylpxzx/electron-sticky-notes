@@ -39,6 +39,7 @@
 
 <script setup>
 import { reactive, watch } from "vue";
+import { setBgColor } from '@/utils';
 const props = defineProps({
   isShow: {
     type: Boolean,
@@ -72,12 +73,7 @@ watch(() => props.isShow, (newVal) => {
 });
 
 watch([() => state.transparency, () => state.colorValue], ([newTransparency, newColor]) => {
-  const rgba = newColor.replace('#', '');
-  const r = parseInt(rgba.substring(0, 2), 16);
-  const g = parseInt(rgba.substring(2, 4), 16);
-  const b = parseInt(rgba.substring(4, 6), 16);
-  const a = 1 - (newTransparency / 100);
-  document.documentElement.style.setProperty('--bg-color', `rgba(${r}, ${g}, ${b}, ${a})`);
+  setBgColor(newColor, newTransparency);
   emit('color', { color: newColor, transparency: newTransparency });
 });
 

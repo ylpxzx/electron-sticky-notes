@@ -143,6 +143,7 @@ import { reactive, computed, onMounted, watch } from "vue";
 import dayjs from 'dayjs';
 import DropdownMenu from './components/DropdownMenu/index.vue';
 import ConfigComp from './components/ConfigComp/index.vue';
+import { setBgColor } from '@/utils';
 
 const state = reactive({
   currentDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
@@ -173,13 +174,8 @@ const onGetConfig = async () => {
     state.isTop = item.isAlwaysOnTop
     state.bgColor = item.bgColor
     state.transparency = item.transparency
-    const rgba = state.bgColor.replace('#', '');
-    const r = parseInt(rgba.substring(0, 2), 16);
-    const g = parseInt(rgba.substring(2, 4), 16);
-    const b = parseInt(rgba.substring(4, 6), 16);
-    const a = 1 - (state.transparency / 100);
-    document.documentElement.style.setProperty('--bg-color', `rgba(${r}, ${g}, ${b}, ${a})`);
-    })
+    setBgColor(state.bgColor, state.transparency);
+  })
 }
 
 watch(() => state.isTop, (newVal) => {
