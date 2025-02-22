@@ -32,6 +32,10 @@
               step="1" v-model="state.transparency" />
           </div>
         </div>
+        <div class="flex justify-between pt-4">
+          <div></div>
+          <button class="text-red-500" @click="onExit">退出应用</button>
+        </div>
       </div>
     </div>
   </div>
@@ -81,6 +85,10 @@ watch([() => state.transparency, () => state.colorValue], ([newTransparency, new
 const onCloseShow = () => {
   state.isVisible = false;
   emit('close');
+}
+
+const onExit = () => {
+  electronAPI.exitApp();
 }
 
 

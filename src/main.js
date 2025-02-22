@@ -25,6 +25,7 @@ const createWindow = () => {
     minHeight: windowConfig.config.minHeight,
     minWidth: windowConfig.config.minWidth,
     frame: false,
+    // skipTaskbar: true, // 隐藏任务栏图标
     alwaysOnTop: windowConfig.config.isAlwaysOnTop,
     transparent: true,
     webPreferences: {
@@ -72,7 +73,11 @@ const createWindow = () => {
     windowConfig.set('mainWindow.height', bounds.height);
   });
 
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  ipcMain.on('exit-app', () => {
+    mainWindow.close();
+  })
+
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
 };
 
 app.whenReady().then(() => {
