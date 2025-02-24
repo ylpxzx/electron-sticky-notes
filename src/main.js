@@ -25,7 +25,7 @@ const createWindow = () => {
     minHeight: windowConfig.config.minHeight,
     minWidth: windowConfig.config.minWidth,
     frame: false,
-    // skipTaskbar: true, // 隐藏任务栏图标
+    skipTaskbar: true, // 隐藏任务栏图标
     alwaysOnTop: windowConfig.config.isAlwaysOnTop,
     transparent: true,
     webPreferences: {
