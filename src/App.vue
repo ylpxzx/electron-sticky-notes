@@ -37,9 +37,9 @@
         </div>
       </div>
       <div>
-        <div class="py-6">
-          <div class="font-bold text-2xl pb-2">{{ state.currentDate }}</div>
-          <p>{{ state.listData.length }} Tasks</p>
+        <div class="py-2">
+          <!-- <div class="font-bold text-2xl pb-2">{{ state.currentDate }}</div> -->
+          <div>{{ state.listData.length }} Tasks</div>
         </div>
         <div>
           <div class="flex items-center rounded-md bg-transparent">
@@ -147,7 +147,7 @@ import ConfigComp from './components/ConfigComp/index.vue';
 import { setBgColor } from '@/utils';
 
 const state = reactive({
-  currentDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  // currentDate: dayjs().format('YYYY-MM-DD HH:mm'),
   taskValue: '',
   editId: '',
   tabSign: 'incomplete',
