@@ -9,5 +9,6 @@ export const config = {
     isAlwaysOnTop: false,
     bgColor: '#000000',
     transparency: 0,
+    autoStart: false
   }
 }

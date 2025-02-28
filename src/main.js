@@ -10,11 +10,17 @@ const windowConfig = new Config();
 // Avoid Warning：Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
+const configObj = windowConfig.get();
+
 if (started) {
   app.quit();
 }
 
 Store.initRenderer();
+
+ipcMain.on('set-auto', (event, content) => {
+  config.set(content.key, content.value);
+})
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -80,9 +86,21 @@ const createWindow = () => {
   // mainWindow.webContents.openDevTools({ mode: "detach" });
 };
 
+// 是否开机自启动
+if (configObj.autoStart) {
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    openAsHidden: true,
+})} else {
+  app.setLoginItemSettings({
+    openAtLogin: false,
+    openAsHidden: false,
+  });
+}
+
 app.whenReady().then(() => {
   createWindow();
-  initEvent();
+  initEvent(app);
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();

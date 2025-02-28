@@ -135,7 +135,8 @@
       </div>
     </div>
     <ConfigComp v-if="state.isOpenConfig" v-model:is-show="state.isOpenConfig" v-model:bg-color="state.bgColor"
-      v-model:transparency="state.transparency" @close="onCloseEvent" @color="onUpdateColor"></ConfigComp>
+      v-model:transparency="state.transparency" v-model:auto-start="state.autoStart" @close="onCloseEvent"
+      @color="onUpdateColor" @auto="onAutoStartEvent"></ConfigComp>
   </div>
 </template>
 
@@ -175,6 +176,7 @@ const onGetConfig = async () => {
     state.isTop = item.isAlwaysOnTop
     state.bgColor = item.bgColor
     state.transparency = item.transparency
+    state.autoStart = item.autoStart
     setBgColor(state.bgColor, state.transparency);
   })
 }
@@ -198,6 +200,14 @@ const onUpdateColor = (item) => {
     key: 'mainWindow.transparency',
     value: state.transparency
   })
+}
+
+const onAutoStartEvent = (item) => {
+  electronAPI.setAppConfig({
+    key: 'mainWindow.autoStart',
+    value: item.autoStart
+  })
+  electronAPI.setAuto(item.autoStart)
 }
 
 const dragStart = (event, item) => {

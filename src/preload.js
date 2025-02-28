@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   setIsTop: (isTop) => ipcRenderer.send('set-is-top', isTop),
   exitApp: () => ipcRenderer.send('exit-app'),
   setAppConfig: (content) => ipcRenderer.send('set-app-config', content),
+  setAuto: (content) => ipcRenderer.send('set-auto', content),
   getAllTodo: () => ipcRenderer.invoke('getTodo'),
   getAppConfig: () => ipcRenderer.invoke('getConfig'),
   updateTodo: (data) => ipcRenderer.send('updateTodo', data),

@@ -22,6 +22,12 @@
       </div>
       <div class="flex flex-col gap-2 pb-4 text-xs text-gray-600">
         <div class="flex justify-between">
+          <div>开机时自动启动</div>
+          <div>
+            <input type="radio" id="huey" name="drone" v-model="state.autoStart" checked />
+          </div>
+        </div>
+        <div class="flex justify-between">
           <div>背景颜色</div>
           <div><input type="color" v-model="state.colorValue" /></div>
         </div>
@@ -63,12 +69,13 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['close', 'color']);
+const emit = defineEmits(['close', 'color', 'auto']);
 
 const state = reactive({
   isDropdown: false,
   isVisible: props.isShow,
   colorValue: props.bgColor,
+  autoStart: props.autoStart,
   transparency: props.transparency,
 })
 
@@ -79,6 +86,10 @@ watch(() => props.isShow, (newVal) => {
 watch([() => state.transparency, () => state.colorValue], ([newTransparency, newColor]) => {
   setBgColor(newColor, newTransparency);
   emit('color', { color: newColor, transparency: newTransparency });
+});
+
+watch(() => state.autoStart, (newVal) => {
+  emit('auto', { autoStart: newVal });
 });
 
 
