@@ -159,6 +159,7 @@ const state = reactive({
   isTop: false,
   bgColor: '#000000',
   transparency: 0,
+  autoStart: false,
 })
 
 const onIsTop = () => {
@@ -208,6 +209,7 @@ const onAutoStartEvent = (item) => {
     value: item.autoStart
   })
   electronAPI.setAuto(item.autoStart)
+  state.autoStart = item.autoStart
 }
 
 const dragStart = (event, item) => {

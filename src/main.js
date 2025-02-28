@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, screen } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, Tray, Menu, nativeImage, } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { initEvent } from './event/index';
@@ -17,10 +17,6 @@ if (started) {
 }
 
 Store.initRenderer();
-
-ipcMain.on('set-auto', (event, content) => {
-  config.set(content.key, content.value);
-})
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -82,8 +78,9 @@ const createWindow = () => {
   ipcMain.on('exit-app', () => {
     mainWindow.close();
   })
+  mainWindow.webContents.openDevTools({ mode: "detach" });
 
-  // mainWindow.webContents.openDevTools({ mode: "detach" });
+  return mainWindow;
 };
 
 // 是否开机自启动
@@ -98,9 +95,30 @@ if (configObj.autoStart) {
   });
 }
 
+const getImagePath = (img) => {
+  return path.resolve(__dirname, img);
+}
+
+
+const initTray = (windowObj) => {
+  const tray = new Tray(nativeImage.createFromPath('static/note.png'))
+  let menu = [{
+      label: "退出应用",
+      click: () => app.quit(),
+  }]
+  tray.setContextMenu(Menu.buildFromTemplate(menu));
+  tray.setToolTip('This is a convenient visa application')
+  // 双击显示主界面
+  tray.addListener('double-click', () => {
+    windowObj.show()
+  })
+}
+
 app.whenReady().then(() => {
-  createWindow();
+  const windowObj = createWindow();
   initEvent(app);
+  initTray(windowObj);
+  // 创建托盘
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();

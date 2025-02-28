@@ -24,7 +24,7 @@
         <div class="flex justify-between">
           <div>开机时自动启动</div>
           <div>
-            <input type="radio" id="huey" name="drone" v-model="state.autoStart" checked />
+            <input type="checkbox" id="checkbox" v-model="state.auto" />
           </div>
         </div>
         <div class="flex justify-between">
@@ -38,10 +38,10 @@
               step="1" v-model="state.transparency" />
           </div>
         </div>
-        <div class="flex justify-between pt-4">
+        <!-- <div class="flex justify-between pt-4">
           <div></div>
           <button class="text-red-500" @click="onExit">退出应用</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -66,6 +66,10 @@ const props = defineProps({
   transparency: {
     type: Number,
     default: 0,
+  },
+  autoStart: {
+    type: Boolean,
+    default: false,
   }
 });
 
@@ -75,7 +79,7 @@ const state = reactive({
   isDropdown: false,
   isVisible: props.isShow,
   colorValue: props.bgColor,
-  autoStart: props.autoStart,
+  auto: props.autoStart,
   transparency: props.transparency,
 })
 
@@ -88,7 +92,7 @@ watch([() => state.transparency, () => state.colorValue], ([newTransparency, new
   emit('color', { color: newColor, transparency: newTransparency });
 });
 
-watch(() => state.autoStart, (newVal) => {
+watch(() => state.auto, (newVal) => {
   emit('auto', { autoStart: newVal });
 });
 
@@ -98,9 +102,9 @@ const onCloseShow = () => {
   emit('close');
 }
 
-const onExit = () => {
-  electronAPI.exitApp();
-}
+// const onExit = () => {
+//   electronAPI.exitApp();
+// }
 
 
 </script>
