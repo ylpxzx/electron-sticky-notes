@@ -78,7 +78,7 @@ const createWindow = () => {
   ipcMain.on('exit-app', () => {
     mainWindow.close();
   })
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
 
   return mainWindow;
 };
@@ -96,12 +96,12 @@ if (configObj.autoStart) {
 }
 
 const getImagePath = (img) => {
-  return path.resolve(__dirname, img);
+  return path.join(process.resourcesPath, img);
 }
 
 
 const initTray = (windowObj) => {
-  const tray = new Tray(nativeImage.createFromPath('static/note.png'))
+  const tray = new Tray(nativeImage.createFromPath(getImagePath('static/note.png')))
   let menu = [{
       label: "退出应用",
       click: () => app.quit(),
