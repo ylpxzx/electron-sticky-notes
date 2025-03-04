@@ -16,6 +16,11 @@ if (started) {
   app.quit();
 }
 
+
+const getImagePath = (img) => {
+  return path.join(process.resourcesPath, img);
+}
+
 Store.initRenderer();
 
 const createWindow = () => {
@@ -94,11 +99,6 @@ if (configObj.autoStart) {
     openAsHidden: false,
   });
 }
-
-const getImagePath = (img) => {
-  return path.join(process.resourcesPath, img);
-}
-
 
 const initTray = (windowObj) => {
   const tray = new Tray(nativeImage.createFromPath(getImagePath('static/note.png')))
