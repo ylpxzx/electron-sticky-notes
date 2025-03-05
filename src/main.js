@@ -18,6 +18,9 @@ if (started) {
 
 
 const getImagePath = (img) => {
+  if (process.env.NODE_ENV === 'development') {
+    return img;
+  }
   return path.join(process.resourcesPath, img);
 }
 
